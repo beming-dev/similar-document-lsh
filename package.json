@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "murmurhash-js": "^1.0.0",
+    "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28"
+  }
+}
