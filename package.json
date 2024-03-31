@@ -1,4 +1,13 @@
 {
+  "name": "similar-document-lsh",
+  "version": "1.0.0",
+  "description": "finding similar document",
+  "main": "./util.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./util.js"
+  },
+  "author": "beming-dev",
   "dependencies": {
     "murmurhash-js": "^1.0.0",
     "typescript": "^5.4.3"

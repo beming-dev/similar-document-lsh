@@ -64,7 +64,10 @@ const getMatrix = (shingles: string[][], allToken: string[]): number[][] => {
   return matrix;
 };
 
-const minHashing = (inputMatrix: number[][], signatureCnt): number[][] => {
+const minHashing = (
+  inputMatrix: number[][],
+  signatureCnt: number
+): number[][] => {
   const rowNum = inputMatrix.length;
   const columnNum = inputMatrix[0].length;
 
@@ -104,12 +107,9 @@ export const main = (
   const shingle1: string[] = shingling(text01, k);
   const shingle2: string[] = shingling(text02, k);
   const shingleArr: string[][] = [shingle1, shingle2];
-
   const allToken: string[] = getAllTokens(shingleArr);
-
   const inputMatrix: number[][] = getMatrix(shingleArr, allToken);
-
-  const minHashed = minHashing(inputMatrix, signatureCnt);
+  const minHashed: number[][] = minHashing(inputMatrix, signatureCnt);
 
   let cnt = 0;
 
@@ -117,12 +117,42 @@ export const main = (
     if (minHashed[r][0] == minHashed[r][1]) cnt++;
   }
 
-  console.log(cnt, "/", "500");
+  return {
+    getFistShingle() {
+      return shingle1;
+    },
+    getSecondShingle() {
+      return shingle2;
+    },
+    getAllTokens() {
+      return allToken;
+    },
+    getInputMatrix() {
+      return inputMatrix;
+    },
+    getMinHashed() {
+      return minHashed;
+    },
+    getSimilarity() {
+      return cnt / signatureCnt;
+    },
+  };
 };
 
-main(
-  "gdflkgnemnterlkhdfngm,dsfngernlgndfsgherierlkgndsfjkgelrwktmergbsldkfjgblertheri;lgnel;fbndsjfherlknerkjgne;roi",
-  "dfksjgrngerndfk;lgdfg,.df,smn;eronglkdfnbdfnoiergmdfnb;dshdsrgnerlkndfoibdflbndsoigherlkgndfsl;nbisfdogdflknd,.",
-  8,
-  500
+interface MainFunction {
+  getFirstShingle(): string[];
+  getSecondShingle(): string[];
+  getAllTokens(): string[];
+  getInputMatrix(): number[][];
+  getMinHashed(): number[][];
+  getSimilarity(): number;
+}
+
+console.log(
+  main(
+    "gdflkgnemnterlkhdfngm,dsfngernlgndfsgherierlkgndsfjkgelrwktmergbsldkfjgblertheri;lgnel;fbndsjfherlknerkjgne;roi",
+    "dfksjgrngerndfk;lgdfg,.df,smn;eronglkdfnbdfnoiergmdfnb;dshdsrgnerlkndfoibdflbndsoigherlkgndfsl;nbisfdogdflknd,.",
+    8,
+    1000
+  ).getInputMatrix()
 );
