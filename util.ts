@@ -30,7 +30,7 @@ const shingling = (text: string, k: number): string[] => {
   const result: string[] = [];
 
   for (let i = 0; i < textSize - k; i++) {
-    const shingled = text.substring(i, k);
+    const shingled = text.substring(i, i + k);
 
     result.push(shingled);
   }
@@ -64,10 +64,9 @@ const getMatrix = (shingles: string[][], allToken: string[]): number[][] => {
   return matrix;
 };
 
-const minHashing = (inputMatrix: number[][]): number[][] => {
+const minHashing = (inputMatrix: number[][], signatureCnt): number[][] => {
   const rowNum = inputMatrix.length;
   const columnNum = inputMatrix[0].length;
-  const signatureCnt = 100;
 
   const hashFunctions: ((value: number) => number)[] = createHashFunctionArray(
     signatureCnt,
@@ -96,29 +95,34 @@ const minHashing = (inputMatrix: number[][]): number[][] => {
   return signatureMatrix;
 };
 
-const main = () => {
-  const text01 = "hello world? Its mingwan";
-  const text02 = "hello world! Its youngsu";
-  const k = 4;
-
+export const main = (
+  text01: string,
+  text02: string,
+  k: number,
+  signatureCnt: number
+) => {
   const shingle1: string[] = shingling(text01, k);
   const shingle2: string[] = shingling(text02, k);
-
   const shingleArr: string[][] = [shingle1, shingle2];
+
   const allToken: string[] = getAllTokens(shingleArr);
 
   const inputMatrix: number[][] = getMatrix(shingleArr, allToken);
-  const minHashed = minHashing(inputMatrix);
 
-  console.log(minHashed);
+  const minHashed = minHashing(inputMatrix, signatureCnt);
 
   let cnt = 0;
 
-  for (let r = 0; r < 100; r++) {
+  for (let r = 0; r < signatureCnt; r++) {
     if (minHashed[r][0] == minHashed[r][1]) cnt++;
   }
 
-  console.log(cnt, "/", 100);
+  console.log(cnt, "/", "500");
 };
 
-main();
+main(
+  "gdflkgnemnterlkhdfngm,dsfngernlgndfsgherierlkgndsfjkgelrwktmergbsldkfjgblertheri;lgnel;fbndsjfherlknerkjgne;roi",
+  "dfksjgrngerndfk;lgdfg,.df,smn;eronglkdfnbdfnoiergmdfnb;dshdsrgnerlkndfoibdflbndsoigherlkgndfsl;nbisfdogdflknd,.",
+  8,
+  500
+);

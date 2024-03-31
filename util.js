@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.main = void 0;
 var murmurHash = require("murmurhash-js");
 var INF = 987654321;
 var createHashFunctionArray = function (numOfHashFunctions, maxIndex) {
@@ -17,7 +20,7 @@ var shingling = function (text, k) {
     var textSize = text.length;
     var result = [];
     for (var i = 0; i < textSize - k; i++) {
-        var shingled = text.substring(i, k);
+        var shingled = text.substring(i, i + k);
         result.push(shingled);
     }
     return result;
@@ -48,7 +51,7 @@ var getMatrix = function (shingles, allToken) {
 var minHashing = function (inputMatrix) {
     var rowNum = inputMatrix.length;
     var columnNum = inputMatrix[0].length;
-    var signatureCnt = 100;
+    var signatureCnt = 500;
     var hashFunctions = createHashFunctionArray(signatureCnt, rowNum - 1);
     var signatureMatrix = Array.from(Array(signatureCnt), function () {
         return Array(columnNum).fill(INF);
@@ -65,22 +68,22 @@ var minHashing = function (inputMatrix) {
     }
     return signatureMatrix;
 };
-var main = function () {
-    var text01 = "hello world? Its mingwan";
-    var text02 = "hello world! Its youngsu";
-    var k = 4;
+var main = function (text01, text02, k) {
     var shingle1 = shingling(text01, k);
     var shingle2 = shingling(text02, k);
     var shingleArr = [shingle1, shingle2];
     var allToken = getAllTokens(shingleArr);
+    console.log(allToken);
     var inputMatrix = getMatrix(shingleArr, allToken);
+    console.log(inputMatrix);
     var minHashed = minHashing(inputMatrix);
     console.log(minHashed);
     var cnt = 0;
-    for (var r = 0; r < 100; r++) {
+    for (var r = 0; r < 500; r++) {
         if (minHashed[r][0] == minHashed[r][1])
             cnt++;
     }
-    console.log(cnt, "/", 100);
+    console.log(cnt, "/", "500");
 };
-main();
+exports.main = main;
+(0, exports.main)("gdflkgnemnterlkhdfngm,dsfngernlgndfsgherierlkgndsfjkgelrwktmergbsldkfjgblertheri;lgnel;fbndsjfherlknerkjgne;roi", "dfksjgrngerndfk;lgdfg,.df,smn;eronglkdfnbdfnoiergmdfnb;dshdsrgnerlkndfoibdflbndsoigherlkgndfsl;nbisfdogdflknd,.", 8);
